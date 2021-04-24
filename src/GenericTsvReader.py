@@ -54,8 +54,10 @@ class GenericTsvReader(object):
         #  beginning of the first non-comment line.
         self.inputContentFP.seek(resetLocation, os.SEEK_SET)
 
-    def next(self):
-        return self.dictReader.next()
+
+    # python3 needs __next__ instead of next
+    def __next__(self):
+        return self.dictReader.__next__()
         
     def getFieldNames(self):
         return self.dictReader.fieldnames

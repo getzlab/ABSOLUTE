@@ -37,10 +37,10 @@ def absolute(seg_file, maf, skew, pairName):
         --sample_name ${pairName} \
         --results_dir . \
         --ssnv_skew ${skew} \
-        --abs_lib_dir /xchip/tcga/Tools/absolute/releases/v1.5/"""
+        --abs_lib_dir /xchip/tcga/Tools/absolute/releases/v1.5"""
       ],
       resources = {
         "mem" : "8G"
       },
-      docker = "gcr.io/broad-getzlab-workflows/absolute_wolf:v1"
+      docker = "gcr.io/broad-getzlab-workflows/absolute_wolf:v2"
     )

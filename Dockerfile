@@ -15,5 +15,5 @@ RUN Rscript -e "BiocManager::install('GenomicRanges')"
 
 WORKDIR /app
 RUN mkdir -p /xchip/tcga/Tools/absolute/releases/v1.5/
-COPY v1.5/* /xchip/tcga/Tools/absolute/releases/v1.5/
+COPY v1.5/ /xchip/tcga/Tools/absolute/releases/v1.5/
 COPY src/*.py /usr/local/bin/

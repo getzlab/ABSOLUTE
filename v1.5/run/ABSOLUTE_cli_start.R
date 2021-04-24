@@ -61,11 +61,11 @@ require(RColorBrewer)
 #suppressPackageStartupMessages(require(RColorBrewer))
 CGA_DIR_ABS=opt[["abs_lib_dir"]] ##"/soft/local/absolute" #/xchip/tcga/Tools/absolute/releases/v1.5/
 
-   print( paste("sourcing files in ", CGA_DIR_ABS, sep=""))
-   #rr = dir( file.path( CGA_DIR_ABS, "ABSOLUTE/sandbox"), full.names=TRUE )
-   rr = dir(CGA_DIR_ABS,full.names=TRUE )
-   for( i in 1:length(rr) ) { 
-   source(rr[i])}
+print( paste("sourcing files in ", CGA_DIR_ABS, sep=""))
+#rr = dir( file.path( CGA_DIR_ABS, "ABSOLUTE/sandbox"), full.names=TRUE )
+rr = dir(CGA_DIR_ABS,full.names=TRUE, pattern = "*.R" )
+for( i in 1:length(rr) ) { 
+source(rr[i])}
 
 
 # moved into the absolute root dir

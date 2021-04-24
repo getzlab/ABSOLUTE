@@ -317,9 +317,9 @@ select_protein_change_annot_using_COSMIC = function( MAF, verbose=FALSE )
 
 
    pc = MAF[,"Protein_Change"]
-   pc[pc.isna()] = ""
+   pc[is.na(pc)] = ""
    MAF[,"Protein_Change"] <- as.character(pc)
-   
+
    res = strsplit( MAF[,"Protein_Change"], "[0-9]+" )
    A1 = unlist( lapply( res, "[", 1 ))
    A2 = unlist( lapply( res, "[", 2 ))
