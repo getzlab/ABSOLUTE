@@ -23,15 +23,17 @@ def absolute(seg_file, maf, skew, pairName):
         python /usr/local/bin/split_maf_indel_snp.py -i ${maf} -o $SNV_MAF -f Variant_Type -v "SNP|DNP|TNP|MNP"
         python /usr/local/bin/split_maf_indel_snp.py -i ${maf} -o $INDEL_MAF -f Variant_Type -v "INS|DEL" """,
 
+        'grep -v "NA" ${seg_file} > no_nan_segs.tsv',
+
         """
         awk 'BEGIN{FS=OFS="\t"} {gsub(/^chr/, "", $5)} 1' $SNV_MAF > reformat_snv.maf
         awk 'BEGIN{FS=OFS="\t"} {gsub(/^chr/, "", $5)} 1' $INDEL_MAF > reformat_indel.maf
+        awk 'BEGIN{FS=OFS="\t"} {gsub(/^chr/, "", $1)} 1' no_nan_segs.tsv > reformat_seg.tsv
         """,
         
-        'grep -v "NA" ${seg_file} > no_nan_segs.tsv',
 
         """Rscript /xchip/tcga/Tools/absolute/releases/v1.5/run/ABSOLUTE_cli_start.R \
-        --seg_dat_fn no_nan_segs.tsv \
+        --seg_dat_fn reformat_seg.tsv \
         --maf_fn reformat_snv.maf \
         --indelmaf_fn reformat_indel.maf \
         --sample_name ${pairName} \
