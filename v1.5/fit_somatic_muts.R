@@ -106,9 +106,9 @@ CreateMutCnDat <- function(maf, indel.maf, seg.dat, min.mut.af, verbose=FALSE)
      class = maf[, "Variant_Classification"]
      n.ix = class %in% c("IGR", "Intron", "5'UTR", "3'UTR", "RNA", "5'Flank")
 
-     msg = paste("Removing ", sum(n.ix), " of ", length(n.ix), " indels in IGR / Intron / UTR / Flank / RNA", sep="")
-     print(msg)
-     maf = maf[!n.ix,]
+    #  msg = paste("Removing ", sum(n.ix), " of ", length(n.ix), " indels in IGR / Intron / UTR / Flank / RNA", sep="")
+    #  print(msg)
+    #  maf = maf[!n.ix,]
 
 ## Turn off "don't ask don't tell" for indels; seems hard to hallucinate these reads due to seq errors
      if( FALSE & nrow(maf) > 0)

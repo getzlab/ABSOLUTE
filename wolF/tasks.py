@@ -44,5 +44,5 @@ def absolute(seg_file, maf, skew, pairName):
       resources = {
         "mem" : "8G"
       },
-      docker = "gcr.io/broad-getzlab-workflows/absolute_wolf:v2"
+      docker = "gcr.io/broad-getzlab-workflows/absolute_wolf:no_indel_filter_v6"
     )
