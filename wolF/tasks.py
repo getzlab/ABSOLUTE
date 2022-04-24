@@ -54,7 +54,13 @@ class absolute_extract(wolf.Task):
       "analyst_id" : "wolf"
     }
     script = """
-    Rscript /xchip/tcga/Tools/absolute/releases/v1.5/run/ABSOLUTE_extract_cli_start.R --solution_num $abs_solution_number --analyst_id ${analyst_id} --rdata_modes_fn ${absolute_rdata} --sample_name ${sample_name} --results_dir . --abs_lib_dir /xchip/tcga/Tools/absolute/releases/v1.5/
+    Rscript /xchip/tcga/Tools/absolute/releases/v1.5/run/ABSOLUTE_extract_cli_start.R \
+      --solution_num ${abs_solution_number} \
+      --analyst_id ${analyst_id} \
+      --rdata_modes_fn ${absolute_rdata} \
+      --sample_name ${sample_name} \
+      --results_dir . \
+      --abs_lib_dir /xchip/tcga/Tools/absolute/releases/v1.5/
 
     cp reviewed/SEG_MAF/${sample_name}_ABS_MAF.txt .
     cp reviewed/SEG_MAF/${sample_name}.segtab.txt .
