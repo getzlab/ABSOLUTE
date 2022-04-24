@@ -45,3 +45,34 @@ class absolute(wolf.Task):
   } 
   docker = "gcr.io/broad-getzlab-workflows/absolute_wolf:v6"
 
+class absolute_extract(wolf.Task):
+    name = "ABSOLUTE_extract"
+    inputs = {
+      "abs_solution_number" : None,
+      "absolute_rdata" : None,
+      "sample_name" : None,
+      "analyst_id" : "wolf"
+    }
+    script = """
+    Rscript /xchip/tcga/Tools/absolute/releases/v1.5/run/ABSOLUTE_extract_cli_start.R --solution_num $abs_solution_number --analyst_id ${analyst_id} --rdata_modes_fn ${absolute_rdata} --sample_name ${sample_name} --results_dir . --abs_lib_dir /xchip/tcga/Tools/absolute/releases/v1.5/
+
+    cp reviewed/SEG_MAF/${sample_name}_ABS_MAF.txt .
+    cp reviewed/SEG_MAF/${sample_name}.segtab.txt .
+    cp reviewed/samples/${sample_name}.ABSOLUTE.${analyst_id}.called.RData .
+    cp reviewed/${sample_name}.${analyst_id}.ABSOLUTE.table.txt .
+    
+    cut -f4 ${sample_name}.${analyst_id}.ABSOLUTE.table.txt | tail -n1 > purity
+    cut -f5 ${sample_name}.${analyst_id}.ABSOLUTE.table.txt | tail -n1 > ploidy
+    """
+    output_patterns = {
+        "absolute_annotated_maf_capture" : "*ABS_MAF.txt",
+        "absolute_seg_file" : "*.segtab.txt",
+        "absolute_segdat_file" : "*.called.RData",
+        "absolute_table" : "*.ABSOLUTE.table.txt",
+        "purity" : ("purity", wolf.read_file),
+        "ploidy" : ("ploidy", wolf.read_file)
+    }
+    resources = {
+    "mem" : "8G"
+    } 
+    docker = "gcr.io/broad-getzlab-workflows/absolute_wolf:v6"
