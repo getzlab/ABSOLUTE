@@ -12,6 +12,7 @@ RUN Rscript -e "install.packages('BiocManager')"
 RUN Rscript -e "BiocManager::install('XML')"
 RUN Rscript -e "BiocManager::install('RCurl')"
 RUN Rscript -e "BiocManager::install('GenomicRanges')"
+RUN Rscript -e "install.packages('plyr')"
 
 WORKDIR /app
 RUN mkdir -p /xchip/tcga/Tools/absolute/releases/v1.5/
