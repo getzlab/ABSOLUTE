@@ -18,3 +18,4 @@ WORKDIR /app
 RUN mkdir -p /xchip/tcga/Tools/absolute/releases/v1.5/
 COPY v1.5/ /xchip/tcga/Tools/absolute/releases/v1.5/
 COPY src/*.py /usr/local/bin/
+COPY src/*.R /usr/local/bin/
