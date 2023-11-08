@@ -18,7 +18,7 @@ Out_Name=file.path(paste(pair_id,"tsv",sep="."))
 
 print( paste("sourcing files in ", CGA_DIR_ABS, sep=""))
 
-rr = dir(CGA_DIR_ABS,full.names=TRUE )
+rr = dir(CGA_DIR_ABS,full.names=TRUE, pattern="*.R$")
 for( i in 1:length(rr) ) {
   source(rr[i])}
 load(Called_Absolute)
