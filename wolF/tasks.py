@@ -140,3 +140,25 @@ class absolute_forcecall(wolf.Task):
     "mem" : "8G"
     } 
     docker = "gcr.io/broad-getzlab-workflows/absolute_wolf:no_indel_filter_v6"
+
+class absolute_to_cn_profile(wolf.Task):
+    name = "absolute_to_cn_profile"
+    inputs = {
+            "sample_id",
+            "rdata_fn"
+            }
+    script = """
+    Rscript /usr/local/bin/get_CN_Absolute.Phylogic_SinglePatientTiming.R \
+            --rdata_fn ${rdata_fn} \
+            --pair_id ${sample_id} \
+            --pcawg TRUE \
+            --abs_lib_dir /xchip/tcga/Tools/absolute/releases/v1.5/
+    """
+    output_patterns = {
+            "CN_Profile_ccf":"*segments.txt",
+            "CN_Profile_tsv":"*.tsv"
+            }
+    resources = {
+            "mem": "8G"
+            }
+    docker = "gcr.io/broad-getzlab-workflows/absolute_wolf:v19"
