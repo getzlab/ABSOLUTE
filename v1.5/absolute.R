@@ -146,7 +146,7 @@ RunAbsolute = function(seg.dat.fn, primary.disease, platform, sample.name, resul
     }
     
     indel.maf = NULL
-    if (!is.na(indel.maf.fn) && file.exists(indel.maf.fn)) {
+    if (!is.null(indel.maf.fn) && file.exists(indel.maf.fn)) {
       indel.maf = read.delim(indel.maf.fn, row.names = NULL, stringsAsFactors = FALSE, 
                         check.names = FALSE, na.strings = c("NA", "---"),
                         blank.lines.skip=TRUE, comment.char="#")
