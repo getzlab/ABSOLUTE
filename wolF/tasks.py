@@ -4,10 +4,11 @@ import wolf
 class absolute(wolf.Task): 
   name = "ABSOLUTE" 
   inputs = {
-    "seg_file",
-    "maf",
-    "skew",
-    "pairName"
+    "seg_file": None,
+    "maf": None,
+    "skew": None,
+    "pairName": None,
+    "alpha": -1
   } 
   output_patterns = {
     "absolute_highres_plot" : "*.ABSOLUTE_plot.pdf",
@@ -38,12 +39,13 @@ class absolute(wolf.Task):
     --sample_name ${pairName} \
     --results_dir . \
     --ssnv_skew ${skew} \
+    --force_alpha ${alpha} \
     --abs_lib_dir /xchip/tcga/Tools/absolute/releases/v1.5"""
   ] 
   resources = {
     "mem" : "8G"
   } 
-  docker = "gcr.io/broad-getzlab-workflows/absolute_wolf:v6"
+  docker = "gcr.io/broad-getzlab-workflows/absolute_wolf:alpha_one_v24"
 
 class absolute_extract(wolf.Task):
     name = "ABSOLUTE_extract"
