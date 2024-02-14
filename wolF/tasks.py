@@ -8,7 +8,7 @@ class absolute(wolf.Task):
     "maf": None,
     "skew": None,
     "pairName": None,
-    "alpha": -1
+    "force_alpha": -1
   } 
   output_patterns = {
     "absolute_highres_plot" : "*.ABSOLUTE_plot.pdf",
@@ -39,7 +39,7 @@ class absolute(wolf.Task):
     --sample_name ${pairName} \
     --results_dir . \
     --ssnv_skew ${skew} \
-    --force_alpha ${alpha} \
+    --force_alpha ${force_alpha} \
     --abs_lib_dir /xchip/tcga/Tools/absolute/releases/v1.5"""
   ] 
   resources = {
