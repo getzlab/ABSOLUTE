@@ -2,7 +2,10 @@ library(optparse)
 option.list <- list(
   make_option("--sif", dest="sif"),
   make_option("--name", dest="name"), 
-  make_option("--norun", dest="dry_run",action="store_true")) 
+  make_option("--norun", dest="dry_run",action="store_true"),
+  make_option("--max_ploidy", dest="max_ploidy",type="double",default=6.0)
+  )
+
 
 #--seg_dat_fn --maf_fn --indelmaf_fn --sample_name --results_dir --ssnv_skew
 
@@ -30,7 +33,7 @@ source( file.path( CGA_DIR, "Phylogic", "CCF_DP_plots.R") )
    ABSOLUTE_argv = list()
 
    ABSOLUTE_argv$min.ploidy = 1.1
-   ABSOLUTE_argv$max.ploidy = 6.0
+   ABSOLUTE_argv$max.ploidy = opt[["max_ploidy"]]
    ABSOLUTE_argv$sigma.h = 0.01
    ABSOLUTE_argv$max.non.clonal = 0.99
    ABSOLUTE_argv$min_probes = 1
