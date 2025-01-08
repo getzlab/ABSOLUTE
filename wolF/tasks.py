@@ -35,7 +35,7 @@ class absolute(wolf.Task):
     --sample_name ${pairName} \
     --results_dir . \
     --ssnv_skew ${skew} \
-    --abs_lib_dir /xchip/tcga/Tools/absolute/releases/v1.5
+    --abs_lib_dir /xchip/tcga/Tools/absolute/releases/v1.5 \
     --max_ploidy ${max_ploidy}""",
     ]
     resources = {"mem": "8G"}
