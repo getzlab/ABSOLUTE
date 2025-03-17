@@ -94,6 +94,7 @@ RunAbsolute = function(seg.dat.fn, primary.disease, platform, sample.name, resul
   SCNA.argv = list( copy_num_type, min.ploidy, max.ploidy, sigma.h )
   names(SCNA.argv) = c( "copy_num_type", "min.ploidy", "max.ploidy", "sigma.h" )
   SCNA_model = SCNA_model_setup( SCNA.argv, verbose )
+  SCNA_model[["kQ"]] <- max.ploidy + 1
   
   tmp.dir = file.path(results.dir, "tmp")
   dir.create(tmp.dir, recursive = TRUE, showWarnings = FALSE)

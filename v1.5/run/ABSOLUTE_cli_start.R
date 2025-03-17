@@ -11,7 +11,8 @@ option.list <- list(
   make_option("--abs_lib_dir", dest="abs_lib_dir"),
   make_option("--platform", dest="platform", default="Illumina_WES"),
   make_option("--force_alpha", dest="f_a",type="double",default=NA),
-  make_option("--force_tau", dest="f_t",type="double",default=NA))
+  make_option("--force_tau", dest="f_t",type="double",default=NA),
+  make_option("--max_ploidy", dest="max_ploidy",type="double",default=6.0))
 #--seg_dat_fn --maf_fn --indelmaf_fn --sample_name --results_dir --ssnv_skew
 
 #"""Rscript /run/ABSOLUTE_cli_start.R \
@@ -24,7 +25,7 @@ opt <- parse_args(OptionParser(option_list=option.list))
 print(opt)
 
 min.ploidy= 1.1
-max.ploidy= 6
+max.ploidy= opt[["max_ploidy"]]
 sigma.h= 0.01
 max.non.clonal= 0.99
 min_probes= 1
