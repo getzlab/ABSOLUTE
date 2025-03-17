@@ -1,5 +1,7 @@
 import wolf
 
+MAIN_DOCKER="gcr.io/broad-getzlab-workflows/absolute_wolf:v34"
+
 # def absolute(seg_file, maf, skew, pairName):
 class absolute(wolf.Task):
     name = "ABSOLUTE"
@@ -40,7 +42,7 @@ class absolute(wolf.Task):
     --max_ploidy ${max_ploidy}""",
     ]
     resources = {"mem": "8G"}
-    docker = "gcr.io/broad-getzlab-workflows/absolute_wolf:max_ploidy_v25"
+    docker = MAIN_DOCKER
 
 class absolute_extract(wolf.Task):
     name = "ABSOLUTE_extract"
