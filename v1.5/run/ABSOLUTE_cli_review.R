@@ -2,8 +2,9 @@ library(optparse)
 option.list <- list(
   make_option("--file_name", dest="file_name"),
   make_option("--sample_name", dest="sample_name"),
-  make_option("--results_dir", dest="results_dir",
-              default=getwd()) )
+  make_option("--results_dir", dest="results_dir", default=getwd()),
+  make_option("--max_ploidy", dest="max_ploidy",type="double",default=6.0)
+)
 
 #--seg_dat_fn --maf_fn --indelmaf_fn --sample_name --results_dir --ssnv_skew
 
@@ -11,7 +12,7 @@ opt <- parse_args(OptionParser(option_list=option.list))
 print(opt)
 
 min.ploidy= 1.1
-max.ploidy= 6
+max.ploidy= opt[["max_ploidy"]]
 sigma.h= 0.01
 max.non.clonal= 0.99
 min_probes= 1
