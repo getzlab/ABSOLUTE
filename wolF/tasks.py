@@ -1,5 +1,6 @@
 import wolf
 
+MAIN_DOCKER="gcr.io/broad-getzlab-workflows/absolute_wolf:v34"
 
 # def absolute(seg_file, maf, skew, pairName):
 class absolute(wolf.Task):
@@ -10,6 +11,7 @@ class absolute(wolf.Task):
         "skew": None,
         "pairName": None,
         "max_ploidy": 6.0,
+        "force_alpha": -1, # for testing purposes: purity 100% if 1
     }
     output_patterns = {
         "absolute_highres_plot": "*.ABSOLUTE_plot.pdf",
@@ -36,11 +38,11 @@ class absolute(wolf.Task):
     --results_dir . \
     --ssnv_skew ${skew} \
     --abs_lib_dir /xchip/tcga/Tools/absolute/releases/v1.5 \
+    --force_alpha ${force_alpha} \
     --max_ploidy ${max_ploidy}""",
     ]
     resources = {"mem": "8G"}
-    docker = "gcr.io/broad-getzlab-workflows/absolute_wolf:max_ploidy_v25"
-
+    docker = MAIN_DOCKER
 
 class absolute_extract(wolf.Task):
     name = "ABSOLUTE_extract"

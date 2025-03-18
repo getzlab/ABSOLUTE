@@ -74,8 +74,6 @@ print(absolute.files)
 
 CreateReviewObject(file_name , absolute.files, results.dir, "allelic", plot.modes=TRUE, num_solutions_plotted=3, verbose=TRUE) 
 #####
-
-}
  
 
 apply_review_and_extract = function( pp.review.fn, obj.name, analyst.id )

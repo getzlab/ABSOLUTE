@@ -6,8 +6,7 @@ build_gene_GR_data = function()
 #  gene_dat = read.delim(genes_FN, check.names=FALSE, stringsAsFactors=FALSE )
 
    #data(refgene)
-   load("/xchip/tcga/Tools/absolute/releases/v1.5/data/refgene.hg19.genes.RData")   
-   gene_dat = refgene 
+   gene_dat = refgene
 
    gene_dat[,"chr"] =  gsub("chr", "", gene_dat[,"chr"] )
    gene_footprints = GRanges( gene_dat[,"chr"], IRanges(gene_dat[,"start"], gene_dat[,"end"]) )
