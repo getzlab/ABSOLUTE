@@ -5,8 +5,10 @@ PlotSeglenHist <- function(D, W, seg_colors=NA, color.by=NA, color.range=NA, x.m
                              y.axis=TRUE, x.ax.labs=TRUE, y.ax.labs=TRUE,
                              xlim=NA, ylab="Genomic fraction", border=TRUE,
                              sideways=FALSE,add=FALSE) {
-
-  if( all(is.na(seg_colors)) & is.na(color.by)) { stop() }
+  
+  # Sometimes when the tumor has no copy-number alterations, ABSOLUTE attempts to plot a chart with no data.
+  # To prevent a crash, I just use an arbitrary color.
+  if( all(is.na(seg_colors)) & is.na(color.by)) { seg_colors = c(1) }
 
  
   P <- length(D)
