@@ -53,6 +53,8 @@ PlotModes <- function(segobj, n.print = NA, called.mode.ix=NA, verbose=FALSE)
       b = res$b
 
       if(any(is.nan(SCNA_model[["seg_CCF_DP"]][["tree_clust"]][["CCF_dens"]]))) {
+        # There are cases where the CCF_dens table is full of NaN values.
+        # I don't know why. I mostly want to prevent it from crashing all the other, probably more reasonable, solutions.
         next
       }
 
