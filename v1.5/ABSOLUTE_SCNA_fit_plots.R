@@ -52,6 +52,9 @@ PlotModes <- function(segobj, n.print = NA, called.mode.ix=NA, verbose=FALSE)
       delta = res$delta
       b = res$b
 
+      if(any(is.nan(SCNA_model[["seg_CCF_DP"]][["tree_clust"]][["CCF_dens"]]))) {
+        next
+      }
 
 
 ##
