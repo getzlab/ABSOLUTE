@@ -25,7 +25,8 @@ GetChrLens <- function(x=FALSE) {
 
 GetCentromerePos <- function(x=FALSE) {
   #data(ChrArmsDat, package = "ABSOLUTE")
-  load("/xchip/tcga/Tools/absolute/releases/v1.5/data/ChrArmsDat.RData")
+  #load("/xchip/tcga/Tools/absolute/releases/v1.5/data/ChrArmsDat.RData")
+  #this is loaded through RunAbsolute already
   chrarm_names <- paste(c(1:22), "q", sep = "")
   
   if (x) {
