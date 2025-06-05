@@ -43,7 +43,7 @@ class absolute(wolf.Task):
     --max_ploidy ${max_ploidy}""",
     ]
     resources = {"mem": "8G"}
-    docker = "gcr.io/broad-getzlab-workflows/absolute_wolf:nan-crash_v31"
+    docker = "gcr.io/broad-getzlab-workflows/absolute_wolf:nan-crash_v33"
 
 
 class absolute_extract(wolf.Task):
@@ -82,7 +82,7 @@ class absolute_extract(wolf.Task):
         "ploidy": ("ploidy", wolf.read_file),
     }
     resources = {"mem": "8G"}
-    docker = "gcr.io/broad-getzlab-workflows/absolute_wolf:nan-crash_v31"
+    docker = "gcr.io/broad-getzlab-workflows/absolute_wolf:nan-crash_v33"
 
 
 class absolute_forcecall(wolf.Task):
@@ -134,7 +134,7 @@ class absolute_forcecall(wolf.Task):
         "absolute_rdata": "*.PP-modes.data.RData",
     }
     resources = {"mem": "8G"}
-    docker = "gcr.io/broad-getzlab-workflows/absolute_wolf:nan-crash_v31"
+    docker = "gcr.io/broad-getzlab-workflows/absolute_wolf:nan-crash_v33"
 
 
 class absolute_to_cn_profile(wolf.Task):
