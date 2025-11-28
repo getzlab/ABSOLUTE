@@ -274,7 +274,6 @@ CreateMutCnDat <- function(maf, indel.maf, seg.dat, min.mut.af, verbose=FALSE)
 identify_potential_clinically_actionable_mutations = function( maf )
 {
    #data("VanAllen2014_TARGET", package="ABSOLUTE")  ## provides TARGET
-   load("/xchip/tcga/Tools/absolute/releases/v1.5/data/VanAllen2014_TARGET.RData")
    target_genes = TARGET
 
    silent_classes = c("Silent", "3'UTR", "3'Flank", "5'UTR", "5'Flank", "IGR", "Intron", "RNA", "Targeted_Region", "De_novo_Start_InFrame") 
@@ -308,7 +307,7 @@ select_protein_change_annot_using_COSMIC = function( MAF, verbose=FALSE )
    }
 
    #data("COSMIC_protein_change_counts_v67_241013", package="ABSOLUTE")
-   load("/xchip/tcga/Tools/absolute/releases/v1.5/data/COSMIC_protein_change_counts_v67_241013.RData")
+   #load("/xchip/tcga/Tools/absolute/releases/v1.5/data/COSMIC_protein_change_counts_v67_241013.RData")
    pankey_counts = COSMIC_protein_change_counts
 
 # count # of identical codon changes in COSMIC

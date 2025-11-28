@@ -8,10 +8,16 @@
 ## whatsoever. Neither the Broad Institute nor MIT can be responsible for its
 ## use, misuse, or functionality.
 
-RunAbsolute = function(seg.dat.fn, primary.disease, platform, sample.name, results.dir, copy_num_type, genome_build, gender=NA, min.ploidy=1, max.ploidy=8, max.as.seg.count=1500, max.non.clonal=0.8, max.neg.genome=0.005, maf.fn = NULL, indel.maf.fn = NULL, min.mut.af = NULL, output.fn.base=NULL, min_probes=10, max_sd=100, sigma.h=0.01, SSNV_skew=1, filter_segs=TRUE, force.alpha=NA, force.tau=NA, verbose = FALSE) 
+RunAbsolute = function(seg.dat.fn, primary.disease, platform, sample.name, results.dir, copy_num_type, genome_build, gender=NA, min.ploidy=1, max.ploidy=8, max.as.seg.count=1500, max.non.clonal=0.8, max.neg.genome=0.005, maf.fn = NULL, indel.maf.fn = NULL, min.mut.af = NULL, output.fn.base=NULL, min_probes=10, max_sd=100, sigma.h=0.01, SSNV_skew=1, filter_segs=TRUE, force.alpha=NA, force.tau=NA, CGA_DIR_ABS="/xchip/tcga/Tools/absolute/releases/v1.5", verbose = FALSE)
 {  
   # new addition
-  load("/xchip/tcga/Tools/absolute/releases/v1.5/data/ChrArmsDat.RData")
+  load(file.path(CGA_DIR_ABS, "data", "ChrArmsDat.RData"))
+  # is it necessary to load those here -
+  # is only used by build_gene_GR_data function in ABS_SCNA_extraction_functions.R
+  # which itself is not referenced anywhere also according to IntelliJ
+  load(file.path(CGA_DIR_ABS, "data", "refgene.hg19.genes.RData"))
+  # another one (currently deactivated in fit_somatic_muts.R) found here:
+  load(file.path(CGA_DIR_ABS, "data", "VanAllen2014_TARGET.RData"))
 
   compute_cached = function( results.dir, file.base, file.ext, fn, verbose, ... )
   {
@@ -41,8 +47,8 @@ RunAbsolute = function(seg.dat.fn, primary.disease, platform, sample.name, resul
  ## TODO:  1) build a new table for hg19
  ##        2) move data from current genome.R into hg RData files
  ##	   3) genome_HSCR_seg_plot.R is currently fixed to hg18 data (in genome.R)	
-  if( genome_build %in% c("hg18") ) { load("/xchip/tcga/Tools/absolute/releases/v1.5/data/hg18_ChrArmsDat.RData") }
-  if( genome_build == "mm9" ) { load("/xchip/tcga/Tools/absolute/releases/v1.5/data/mm9_ChrArmsDat") }
+  if( genome_build %in% c("hg18") ) { load(file.path(CGA_DIR_ABS, "data","hg18_ChrArmsDat.RData")) }
+  if( genome_build == "mm9" ) { load(file.path(CGA_DIR_ABS, "data", "mm9_ChrArmsDat")) }
 
   platform = match.arg(platform, c("SNP_6.0", "Illumina_WES"))
   if (platform == "SNP_6.0") {
@@ -141,7 +147,7 @@ RunAbsolute = function(seg.dat.fn, primary.disease, platform, sample.name, resul
     }
     
     indel.maf = NULL
-    if (!is.na(indel.maf.fn) && file.exists(indel.maf.fn)) {
+    if (!is.null(indel.maf.fn) && file.exists(indel.maf.fn)) {
       indel.maf = read.delim(indel.maf.fn, row.names = NULL, stringsAsFactors = FALSE, 
                         check.names = FALSE, na.strings = c("NA", "---"),
                         blank.lines.skip=TRUE, comment.char="#")
@@ -189,7 +195,7 @@ RunAbsolute = function(seg.dat.fn, primary.disease, platform, sample.name, resul
     if( genome_build %in% c("hg18", "hg19") ) 
     {
        #data(ChrArmPriorDb, package="ABSOLUTE")
-       load("/xchip/tcga/Tools/absolute/releases/v1.5/data/ChrArmPriorDb.RData")
+       load(file.path(CGA_DIR_ABS, "data", "ChrArmPriorDb.RData"))
        model.id = ifelse(seg.dat[["group"]] %in% names(train.obj),
                          seg.dat[["group"]], "Primary")
        mode.res = ApplyKaryotypeModel(mode.res, model.id, train.obj, verbose=verbose)

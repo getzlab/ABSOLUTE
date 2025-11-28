@@ -62,7 +62,9 @@ FindLocationModes <- function(obs, force.alpha, force.tau, SCNA_model, mut.cn.da
   }
   else
   {
-     mode.tab <- MargModeFinder(obs, mut.cn.dat, SSNV_model, SCNA_model, verbose=verbose)
+    # if tumor is already pure, explore only Tau axis, not the full b/delta grid
+    skip.grid <- !is.na(force.alpha) & force.alpha==1
+    mode.tab <- MargModeFinder(obs, mut.cn.dat, SSNV_model, SCNA_model, skip.grid = skip.grid, verbose=verbose)
   }
   
   if (nrow(mode.tab) == 0) {
@@ -128,38 +130,50 @@ FindLocationModes <- function(obs, force.alpha, force.tau, SCNA_model, mut.cn.da
   return(list(mode.tab = mode.tab))
 }
 
-MargModeFinder <- function(obs, mut.cn.dat, SSNV_model, SCNA_model, b.res=0.125, d.res=0.125, verbose=FALSE) 
+MargModeFinder <- function(obs, mut.cn.dat, SSNV_model, SCNA_model, b.res=0.125, d.res=0.125, skip.grid=FALSE, verbose=FALSE)
 {
-  b.grid <- seq( SCNA_model[["kDom1"]][1], SCNA_model[["kDom1"]][2], b.res)
-#  d.grid <- seq( SCNA_model[["kDom2"]][1], SCNA_model[["kDom2"]][2], d.res)
+  # could contatenate three optim:
+  # 1- grid search over b/delta (linked to alpha/tau)
+  # 2- line search if alpha=1
+  # 3- SNV-based search if cn neutral tumor (deactivated with if(FALSE))
 
-  d.grid <- log( seq( exp(SCNA_model[["kDom2"]][1]), exp(SCNA_model[["kDom2"]][2]), 0.02) )
-  n.b <- length(b.grid)
-  n.d <- length(d.grid)
+  if (!skip.grid) {
+    b.grid <- seq(SCNA_model[["kDom1"]][1], SCNA_model[["kDom1"]][2], b.res)
+    #  d.grid <- seq( SCNA_model[["kDom2"]][1], SCNA_model[["kDom2"]][2], d.res)
 
-  mode.tab <- array(NA, dim = c(n.b * n.d, 3))
-  for (i in seq_len(n.b)) {
-    for (j in seq_len(n.d)) {
-      cur.par <- c(b.grid[i], d.grid[j])
-      res <- RunOpt(cur.par, obs, SCNA_model, verbose=verbose) 
-      if (!is.na(res)) {
-        mode.tab[(i - 1) * n.d + j, ] <- c(res[[1]], res[[2]], res[[3]])
+    d.grid <- log(seq(exp(SCNA_model[["kDom2"]][1]), exp(SCNA_model[["kDom2"]][2]), 0.02))
+    n.b <- length(b.grid)
+    n.d <- length(d.grid)
+
+    mode.tab <- array(NA, dim = c(n.b * n.d, 3))
+    for (i in seq_len(n.b)) {
+      for (j in seq_len(n.d)) {
+        cur.par <- c(b.grid[i], d.grid[j])
+        res <- RunOpt(cur.par, obs, SCNA_model, verbose = verbose)
+        if (!is.na(res)) {
+          mode.tab[(i - 1) * n.d + j,] <- c(res[[1]], res[[2]], res[[3]])
+        }
+      }
+      if (verbose) {
+        cat("\n")
       }
     }
-    if (verbose) {
-      cat("\n")
-    }
   }
-  
+
   ## Try 1d opt for pure tumors
   delta_dom = log(c(1 / SCNA_model[["kTauDom"]][2] - 0.05, 1))
-  res_1d = run_1d_opt(obs, SCNA_model, delta_dom, d.res, verbose=verbose)  
+  res_1d = run_1d_opt(obs, SCNA_model, delta_dom, d.res, verbose=verbose)
   if (verbose) {
     print("1d mode opt: ")
     print(res_1d)
   }
-  mode.tab = rbind(mode.tab, res_1d)
-    
+
+  if (!skip.grid) {
+      mode.tab = rbind(mode.tab, res_1d)
+  } else {
+    mode.tab = res_1d
+  }
+
   # try opt on SNVs only for diploid tumors
   if ( FALSE &   !is.na(mut.cn.dat)) {
     alpha_dom = c(0.1, 1) 

@@ -83,12 +83,14 @@ source(rr[i])}
 load(file.path( CGA_DIR_ABS,"data","ChrArmsDat.RData"))
 load(file.path( CGA_DIR_ABS,"data","ChrArmPriorDb.RData"))
 load(file.path( CGA_DIR_ABS,"data","diseaseMap.RData"))
+load(file.path( CGA_DIR_ABS,"data","COSMIC_protein_change_counts_v67_241013.RData"))
+
 RunAbsolute( seg.dat.fn, primary.disease, platform, sample.name, results.dir, copy_num_type,
                         genome_build, gender, min.ploidy, max.ploidy,
                         max.as.seg.count, max.non.clonal, max.neg.genome,
                         maf.fn, indel.maf.fn, min.mut.af,
                         output.fn.base, min_probes, max_sd, sigma.h, SSNV_skew,
-			filter_segs, force.alpha, force.tau, verbose )
+			filter_segs, force.alpha, force.tau, CGA_DIR_ABS, verbose )
 
 
 file.base = paste( output.fn.base, ".ABSOLUTE", sep = "")
